@@ -11,7 +11,7 @@ module.exports = {
         port: 3306,
         user: "root",
         password: "clickpass",
-        database: "test-backend",
+        database: "blog",
         dateStrings: true
     }
 };
