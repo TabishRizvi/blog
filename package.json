@@ -1,0 +1,30 @@
+{
+  "name": "blog-assignment",
+  "version": "1.0.0",
+  "description": "Blog assignment",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TabishRizvi/blog-assignment.git"
+  },
+  "keywords": [
+    "blog",
+    "assignment"
+  ],
+  "author": "Tabish Rizvi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TabishRizvi/blog-assignment/issues"
+  },
+  "homepage": "https://github.com/TabishRizvi/blog-assignment#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "mysql": "^2.11.1",
+    "node-uuid": "^1.4.7"
+  }
+}
