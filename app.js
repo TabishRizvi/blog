@@ -13,7 +13,7 @@ var app = express();
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
-app.use("/api/v1", routes.api);
+app.use("/api/v1", routes);
 
 app.get("/favicon.ico", function (req, res) {
     res.set("Content-Type", "image/x-icon");
