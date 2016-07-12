@@ -22,17 +22,17 @@ app.get("/favicon.ico", function (req, res) {
 
 app.use(function (req, res, next) {
     var err = new Error(req.originalUrl + " not Found");
-    err.status = 404;
+    err.code = 101;
     next(err);
 });
 
-app.use(function (err, req, res) {
-    if (err.status === 400) {
-        res.status(400).send("Invalid JSON");
-        return;
+app.use(function (err, req, res, next) {
+    if(err.code===101) {
+        res.status(404).send("Invalid API Endpoint");
     }
-    res.status(500).send("Internal Server Error");
-
+    else {
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 module.exports = app;

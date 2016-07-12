@@ -18,7 +18,7 @@ module.exports.CreatePostCtrl = function (req, res) {
             var params = [postUUID,req.payload.title];
             db.query(sql, params, function(err,result) {
                 if(err) {
-                    console.log("error");
+                    console.log("error",err);
                     cb(500);
                 }
                 else {
@@ -33,7 +33,7 @@ module.exports.CreatePostCtrl = function (req, res) {
                 var params = [paraUUID,element,postId];
                 db.query(sql, params, function(err) {
                     if(err) {
-                        console.log("error");
+                        console.log("error",err);
                         callback(500);
                     }
                     else {
