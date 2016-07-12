@@ -4,7 +4,8 @@
   "description": "Blog assignment",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node bin/www"
   },
   "repository": {
     "type": "git",

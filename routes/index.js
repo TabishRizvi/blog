@@ -45,5 +45,75 @@ router.post("/comment/post",function(req,res,next) {
 
 },controllers.CreatePostCommentCtrl);
 
+router.post("/comment/paragraph",function(req,res,next) {
+    var schema = Joi.object().keys({
+        para_id: Joi.string().guid(),
+        comment : Joi.string().min(6)
+    });
+
+    lib.utils.validate(req.body,schema,function(err){
+        if(err){
+            lib.utils.sendResponse(res,400,err);
+        }
+        else{
+            req.payload = req.body;
+            next();
+        }
+    });
+
+},controllers.CreateParagraphCommentCtrl);
+
+router.get("/post/:post_id",function(req,res,next) {
+    var schema = Joi.object().keys({
+        post_id: Joi.string().guid()
+    });
+
+    lib.utils.validate(req.params,schema,function(err){
+        if(err){
+            lib.utils.sendResponse(res,400,err);
+        }
+        else{
+            req.payload = req.params;
+            next();
+        }
+    });
+
+},controllers.FetchPostCtrl);
+
+router.get("/post",function(req,res,next) {
+    var schema = Joi.object().keys({
+        ptr: Joi.number().min(0).optional().default(0),
+        order_by : Joi.any().valid(["date","title"]).optional().default("date"),
+        asc : Joi.boolean().optional().default(true)
+    });
+
+    lib.utils.validate(req.query,schema,function(err){
+        if(err){
+            lib.utils.sendResponse(res,400,err);
+        }
+        else{
+            req.payload = req.query;
+            next();
+        }
+    });
+
+},controllers.FetchPostsListCtrl);
+
+router.delete("/comment/:comment_id",function(req,res,next) {
+    var schema = Joi.object().keys({
+        comment_id: Joi.string().guid()
+    });
+
+    lib.utils.validate(req.params,schema,function(err){
+        if(err){
+            lib.utils.sendResponse(res,400,err);
+        }
+        else{
+            req.payload = req.params;
+            next();
+        }
+    });
+
+},controllers.DeleteCommentCtrl);
 
 module.exports = router;
