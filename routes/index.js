@@ -87,12 +87,13 @@ router.get("/post",function(req,res,next) {
         asc : Joi.boolean().optional().default(true)
     });
 
-    lib.utils.validate(req.query,schema,function(err){
+    lib.utils.validate(req.query,schema,function(err, value){
         if(err){
             lib.utils.sendResponse(res,400,err);
         }
         else{
-            req.payload = req.query;
+            req.payload = value;
+            console.log(req.payload);
             next();
         }
     });
@@ -132,6 +133,23 @@ router.get("/comment/paragraph/:para_id",function(req,res,next) {
     });
 
 },controllers.FetchParagraphCommentsCtrl);
+
+router.delete("/post/:post_id",function(req,res,next) {
+    var schema = Joi.object().keys({
+        post_id: Joi.string().guid()
+    });
+
+    lib.utils.validate(req.params,schema,function(err){
+        if(err){
+            lib.utils.sendResponse(res,400,err);
+        }
+        else{
+            req.payload = req.params;
+            next();
+        }
+    });
+
+},controllers.DeletePostCtrl);
 
 router.delete("/comment/:comment_id",function(req,res,next) {
     var schema = Joi.object().keys({

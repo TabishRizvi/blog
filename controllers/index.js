@@ -181,7 +181,7 @@ module.exports.FetchPostsListCtrl = function (req, res) {
     var list,count;
     async.waterfall([
         function(cb) {
-            var sql = "SELECT uuid as post_id,title,date_created FROM posts ORDER BY "+lib.main.getOrderKey("posts",req.payload.order_by)+" "+req.payload.asc?"ASC":"DESC"+" LIMIT 5 OFFSET ?";
+            var sql = "SELECT uuid as post_id,title,date_created FROM posts ORDER BY "+lib.main.getOrderKey("posts",req.payload.order_by)+" "+(req.payload.asc?"ASC":"DESC")+" LIMIT 5 OFFSET ?";
             var params = [req.payload.ptr];
             db.query(sql, params, function(err,result) {
                 if(err) {
@@ -207,13 +207,13 @@ module.exports.FetchPostsListCtrl = function (req, res) {
                 }
             });
         }
-    ], function(err,result) {
+    ], function(err) {
         if(err) {
             lib.utils.sendResponse(res,err);
         }
         else {
             var data = {
-                list : result,
+                list : list,
                 next_ptr : req.payload.ptr + 5 >= count ? null : req.payload.ptr + 5,
                 prev_ptr : req.payload.ptr - 5 <= 0 ? null : req.payload.ptr - 5
             };
@@ -288,6 +288,34 @@ module.exports.FetchParagraphCommentsCtrl = function (req, res) {
         }
         else {
             lib.utils.sendResponse(res,200,result);
+        }
+    });
+};
+
+module.exports.DeletePostCtrl = function (req, res) {
+    async.waterfall([
+        function(cb) {
+            var sql = "DELETE FROM posts WHERE uuid=?";
+            var params = [req.payload.post_id];
+            db.query(sql, params, function(err,result) {
+                if(err) {
+                    console.log("error",err);
+                    cb(500);
+                }
+                else if(result.affectedRows===0) {
+                    cb(404);
+                }
+                else {
+                    cb(null);
+                }
+            });
+        }
+    ], function(err) {
+        if(err) {
+            lib.utils.sendResponse(res,err);
+        }
+        else {
+            lib.utils.sendResponse(res,200);
         }
     });
 };
